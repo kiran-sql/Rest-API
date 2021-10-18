@@ -2,13 +2,17 @@ const express = require('express');
 const path = require('path');
 let personRoute = require('./routes/person');
 const app = express();
+const bodyParser = require('body-parser');
+const customerRoute = require('./routes/customer');
 
+app.use(bodyParser.json());
 app.use((req,res,next) => {
- console.log(`${new Date().toString()} => ${req.originalUrl}`);
+ console.log(`${new Date().toString()} => ${req.originalUrl}`,req.body);
  next();
 });
 
 app.use(personRoute);
+app.use(customerRoute);
 app.use(express.static('public'));
 
 app.use((req,res,next) => {
